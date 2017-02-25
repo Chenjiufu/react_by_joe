@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<script src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+
+</head>
+
+<body>
+
+<div id="container"></div>
+
+<script type="text/javascript">
+//component类，用来表示文本在渲染，更新，删除时应该做些什么事情
+function text(txt){
+    this._e = '' + txt;
+    this._id = null;
+}
+
+text.prototype.mountCompenent = function(idm){
+    this._id = idm;
+    return '<span data-reactid="'+ idm +'">' + this._e +'</span>';
+}
+
+
+function setacompenent(t){
+    if(typeof t === 'string' || typeof t === 'number'){
+        return new text(t);
+    }
+
+}
+React = {
+    nextId: 0,
+    render:function(t,_id1){
+        var comp = setacompenent(t);
+        var j_id = comp.mountCompenent(React.nextId++);
+        $(_id1).html(j_id);
+        $(document).trigger('mountReady');
+    }
+
+
+}
+
+
+
+
+
+
+React.render('hello world',document.getElementById("container"))
+
+</script>
+</body>
+
+
+</html>
